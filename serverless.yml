@@ -1,4 +1,4 @@
-service: python-sesdynamodb-contactform
+service: wespeak-contact
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -19,7 +19,6 @@ provider:
   name: aws
   runtime: python3.6
   region: ${self:custom.secrets.REGION}
-  profile: ${self:custom.secrets.PROFILE}
   stage: ${self:custom.secrets.ENV}
   memory: ${self:custom.secrets.MEMORY}
   timeout: ${self:custom.secrets.TIMEOUT}
@@ -64,8 +63,8 @@ functions:
           private: true
           integration: lambda
           cors:
-            origins: 
-              - ${self:custom.secrets.ORIGINS.${self:provider.stage}}
+            origins:
+              - 'https://wespeakdev.com'
             headers:
               - Content-Type
               - X-Amz-Date
@@ -76,7 +75,7 @@ functions:
             allowCredentials: false
           response:
             headers:
-              "Access-Control-Allow_Origin": "'${self:custom.secrets.ORIGINS.${self:provider.stage}}'"
+              "Access-Control-Allow_Origin": "'${self:custom.secrets.ORIGINS}}'"
   list:
     handler: handler.list
     description: List all the contact form submissions
@@ -89,7 +88,7 @@ functions:
           integration: lambda
           cors:
             origins:
-              - ${self:custom.secrets.ORIGINS.${self:provider.stage}}
+              - 'https://wespeakdev.com'
             headers:
               - Content-Type
               - X-Amz-Date
@@ -100,7 +99,7 @@ functions:
             allowCredentials: false
           response:
             headers:
-              "Access-Control-Allow_Origin": "'${self:custom.secrets.ORIGINS.${self:provider.stage}}'"
+              "Access-Control-Allow_Origin": "'${self:custom.secrets.ORIGINS}'"
 
 resources:
   Resources:
