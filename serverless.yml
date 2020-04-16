@@ -65,6 +65,7 @@ functions:
           cors:
             origins:
               - 'https://wespeakdev.com'
+              - 'https://api.wespeakdev.com'
             headers:
               - Content-Type
               - X-Amz-Date
@@ -75,7 +76,7 @@ functions:
             allowCredentials: false
           response:
             headers:
-              "Access-Control-Allow_Origin": "'${self:custom.secrets.ORIGINS}}'"
+              "Access-Control-Allow-Origin": "'https://api.wespeakdev.com'"
   list:
     handler: handler.list
     description: List all the contact form submissions
@@ -89,6 +90,7 @@ functions:
           cors:
             origins:
               - 'https://wespeakdev.com'
+              - 'https://api.wespeakdev.com'
             headers:
               - Content-Type
               - X-Amz-Date
@@ -99,7 +101,7 @@ functions:
             allowCredentials: false
           response:
             headers:
-              "Access-Control-Allow_Origin": "'${self:custom.secrets.ORIGINS}'"
+              "Access-Control-Allow-Origin": "'https://api.wespeakdev.com'"
 
 resources:
   Resources:
