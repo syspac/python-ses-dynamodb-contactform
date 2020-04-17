@@ -56,8 +56,21 @@ functions:
       - http:
           path: sendMail
           method: post
-          #private: true
-          cors: true
+          private: true
+          cors:
+            origins:
+              - 'https://wespeakdev.com'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+          response:
+            headers:
+              Access-Control-Allow-Origin: "'https://wespeakdev.com'"
   # list:
   #   handler: handler.list
   #   description: List all the contact form submissions
@@ -84,21 +97,21 @@ functions:
   #           headers:
   #             Access-Control-Allow-Origin: "'*'"
 
-resources:
-  Resources:
-    ContactFormDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+# resources:
+#   Resources:
+#     ContactFormDynamoDbTable:
+#       Type: 'AWS::DynamoDB::Table'
+#       DeletionPolicy: Retain
+#       Properties:
+#         AttributeDefinitions:
+#           -
+#             AttributeName: id
+#             AttributeType: S
+#         KeySchema:
+#           -
+#             AttributeName: id
+#             KeyType: HASH
+#         ProvisionedThroughput:
+#           ReadCapacityUnits: 1
+#           WriteCapacityUnits: 1
+#         TableName: ${self:provider.environment.DYNAMODB_TABLE}
