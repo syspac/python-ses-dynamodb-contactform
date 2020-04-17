@@ -33,10 +33,8 @@ def sendMail(event, context):
         #     "email": "chris@belfield.org",
         #     "message": "sdfsdff"
         # }
-        # Broke needs to be fixed
-        #content = 'Sender Email: ' + data['email'] + ',<br> FullName: ' + data['firstname'] + ',<br> Form Type: ' + data['type'] + ',<br> Message Contents: ' + data['message']
-        # saveToDynamoDB(data)
-        # response = sendMailToUser(data, content)
+        saveToDynamoDB(data)
+        response = sendMailToUser(data)
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
@@ -78,7 +76,7 @@ def saveToDynamoDB(data):
     table.put_item(Item=item)
     return
 
-def sendMailToUser(data, content):
+def sendMailToUser(data):
     # Send Email using SES
     return client.send_email(
         Source=sender,

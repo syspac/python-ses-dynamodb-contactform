@@ -56,7 +56,7 @@ functions:
       - http:
           path: sendMail
           method: post
-          private: true
+          #private: true
           cors:
             origins:
               - 'https://wespeakdev.com'
