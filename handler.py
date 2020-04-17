@@ -14,20 +14,41 @@ charset = 'UTF-8'
 
 dynamodb = boto3.resource('dynamodb')
 
+BASE_HEADERS = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": True,
+    "Access-Control-Allow-Methods": 'GET, OPTIONS',
+    "Access-Control-Allow-Headers": 'Content-Type, Authorization, Accept',
+    "Cache-Control": 'private, max-age=3600'
+}
+
 def sendMail(event, context):
-    print(event)
 
     try:
+        #print(event)
         data = event['body']
-        content = 'Sender Email: ' + data['email'] + ',<br> FullName: ' + data['fullname'] + ',<br> Form Type: ' + data['type'] + ',<br> Message Contents: ' + data['message']
-        saveToDynamoDB(data)
-        response = sendMailToUser(data, content)
+        # {
+        #     "firstname": "Chris",
+        #     "lastname": "Belfield",
+        #     "email": "chris@belfield.org",
+        #     "message": "sdfsdff"
+        # }
+        # Broke needs to be fixed
+        #content = 'Sender Email: ' + data['email'] + ',<br> FullName: ' + data['firstname'] + ',<br> Form Type: ' + data['type'] + ',<br> Message Contents: ' + data['message']
+        # saveToDynamoDB(data)
+        # response = sendMailToUser(data, content)
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
         print("Email sent! Message Id:"),
-        print(response['MessageId'])
-    return "Email sent!"
+        #print(response['MessageId'])
+    
+    return {
+        "statusCode": 200,
+        "body": "saved",
+        'headers': BASE_HEADERS
+    }
+
 
 def list(event, context):
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])

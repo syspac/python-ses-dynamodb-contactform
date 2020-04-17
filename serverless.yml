@@ -22,9 +22,6 @@ provider:
   stage: ${self:custom.secrets.ENV}
   memory: ${self:custom.secrets.MEMORY}
   timeout: ${self:custom.secrets.TIMEOUT}
-  apiKeys:
-    - ${self:provider.stage}-contactForm
-    - ${self:provider.stage}-list
   usagePlan:
     quota:
       limit: 10000
@@ -59,49 +56,33 @@ functions:
       - http:
           path: sendMail
           method: post
-          async: false
-          private: true
-          integration: lambda
-          cors:
-            origins:
-              - 'https://wespeakdev.com'
-              - 'https://api.wespeakdev.com'
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-            allowCredentials: false
-          response:
-            headers:
-              "Access-Control-Allow-Origin": "'https://api.wespeakdev.com'"
-  list:
-    handler: handler.list
-    description: List all the contact form submissions
-    events:
-      - http:
-          path: list
-          method: get
-          async: false
-          private: true
-          integration: lambda
-          cors:
-            origins:
-              - 'https://wespeakdev.com'
-              - 'https://api.wespeakdev.com'
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-            allowCredentials: false
-          response:
-            headers:
-              "Access-Control-Allow-Origin": "'https://api.wespeakdev.com'"
+          #private: true
+          cors: true
+  # list:
+  #   handler: handler.list
+  #   description: List all the contact form submissions
+  #   events:
+  #     - http:
+  #         path: list
+  #         method: get
+  #         async: false
+  #         private: true
+  #         integration: lambda
+  #         cors:
+  #           origins:
+  #             - 'https://wespeakdev.com'
+  #             - 'https://api.wespeakdev.com'
+  #           headers:
+  #             - Content-Type
+  #             - X-Amz-Date
+  #             - Authorization
+  #             - X-Api-Key
+  #             - X-Amz-Security-Token
+  #             - X-Amz-User-Agent
+  #           allowCredentials: false
+  #         response:
+  #           headers:
+  #             Access-Control-Allow-Origin: "'*'"
 
 resources:
   Resources:
